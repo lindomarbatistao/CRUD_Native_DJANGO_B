@@ -64,7 +64,7 @@ export default function Login({ navigation }) {
 
             <Pressable
                 style={styles.btnOk}
-
+                onPress={()=>navigation.navigate('SignUp')}
             >
                 <Text style={{ fontSize: 25 }}>Sign Up</Text>
             </Pressable>
