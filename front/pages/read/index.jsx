@@ -15,36 +15,40 @@ export default function Read() {
     const [email, setEmail] = useState('')
     const [numero, setNumero] = useState('')
     const [token, setToken] = useState(null)
+    const [erro, setErro] = useState('')
 
     useEffect(() => {
         AsyncStorage.getItem('token')
-            .then(token => {
-                console.log("Token", token);
+            .then(tokenY => {
+                console.log("Token Read", tokenY);
+                setToken(tokenY)
             }).catch(error => {
                 console.log(error);
             })
-    }, [])
+    }, [erro])
 
     const buscar = async () => {
-        await axios.get('http://127.0.0.1:8000/api/usuario/' + userId,
-            {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-            })
-            .then((response) => {
-                setNome(response.data.nome)
-                setRua(response.data.rua)
-                setBairro(response.data.bairro)
-                setCidade(response.data.cidade)
-                setUf(response.data.uf)
-                setCep(response.data.cep)
-                setEmail(response.data.email)
-                setNumero(response.data.numero)
-            }
-            ).catch((e) => {
-                console.log(e);
-            })
+        console.log("Token Buscar", token)
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/usuario/' + userId,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+            setNome(response.data.nome)
+            setRua(response.data.rua)
+            setBairro(response.data.bairro)
+            setCidade(response.data.cidade)
+            setUf(response.data.uf)
+            setCep(response.data.cep)
+            setEmail(response.data.email)
+            setNumero(response.data.numero)
+
+        } catch (error) {
+            setErro(error.response.status)
+            console.log(error);
+        }
 
     }
 

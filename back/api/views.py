@@ -22,12 +22,12 @@ def listar_clientes(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ClientesView(ListCreateAPIView):
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated, )
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
 
 class ClientesDetailView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated, )
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
 
